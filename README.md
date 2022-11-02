@@ -1,0 +1,2 @@
+# shadowcopy
+vss reset script
