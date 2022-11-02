@@ -9,20 +9,31 @@ $reg = [regex]::Matches($drives, $pattern).Value
 $start = "("
 $end = ":)"
 
-Write-host($reg)
+Write-host($drives)
 
 $count = 0
 
-while($count -ne $reg.Count){
-    
-    $target = $reg[$count] +":" 
+if($reg.Count % 2 == 0){
+    while($count -ne $reg.Count){
 
-    $count++
+        $target = $reg[$count] +":" 
 
-    $storage = $reg[$count] +":"
+        $count++
 
-    $count++
+        $storage = $reg[$count] +":"
 
-    vssadmin resize shadowstorage /For=$target /On=$storage /MaxSize=20%
+        $count++
 
+        Write-host("Target drive is " + $target + " Is being stored on " + $storage)
+
+        vssadmin resize shadowstorage /For=$target /On=$storage /MaxSize=20%
+
+    }
+    else{
+        Write-host("Incorrect number of drive locations reported:" + $reg.Count + ". Must be divisible by 2")
+    }
 }
+
+$drives = vssadmin list shadowstorage 
+
+Write-host($drives)
