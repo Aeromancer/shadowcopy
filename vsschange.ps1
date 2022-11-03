@@ -1,7 +1,5 @@
 ﻿$drives = vssadmin list shadowstorage 
 
-$testText = 'Peter <peter@gmail.com>, Paul <paul@gmail.com>' 
-
 $pattern = '(?<=\().?(?=:\))'
 
 $reg = [regex]::Matches($drives, $pattern).Value
@@ -13,9 +11,18 @@ Write-host($drives)
 
 
 [bool] $test = $true
+$errorCodes = [System.Collections.ArrayList]::New()
+$errorMessages = @( 'Error Code Zero: No error detected', 
+                    'Error Code Two: No Shadow Volume Drives Detected'
+                    'Error Code Two: Wrong number of drives detected')
 
 if($reg.Count % 2 != 0){
-    Write-host("Incorrect number of drive locations reported:" + $reg.Count + ". Must be divisible by 2")
+    [void]$errorCodes.Add(2)
+    $test = $false 
+}
+
+if($reg.Count == 0){
+    [void]$errorCodes.Add(1)
     $test = $false 
 }
 
@@ -39,9 +46,13 @@ if($test){
         vssadmin resize shadowstorage /For=$target /On=$storage /MaxSize=20%
 
     }
-    
+
+    $drives = vssadmin list shadowstorage 
+
+    Write-host($drives)
+} else {
+    while($count -ne $errorCodes){
+    Write-host($errorMessages[$errorCodes[$count]])
+    }
 }
 
-$drives = vssadmin list shadowstorage 
-
-Write-host($drives)
