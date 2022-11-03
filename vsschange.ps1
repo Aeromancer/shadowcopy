@@ -11,27 +11,35 @@ $end = ":)"
 
 Write-host($drives)
 
+
+[bool] $test = $true
+
+if($reg.Count % 2 != 0){
+    Write-host("Incorrect number of drive locations reported:" + $reg.Count + ". Must be divisible by 2")
+    $test = $false 
+}
+
+
+
 $count = 0
 
-if($reg.Count % 2 == 0){
+if($test){
     while($count -ne $reg.Count){
 
-        $target = $reg[$count] +":" 
+        $target = $reg[$count] + ":" 
 
         $count++
 
-        $storage = $reg[$count] +":"
+        $storage = $reg[$count] + ":"
 
         $count++
 
-        Write-host("Target drive is " + $target + " Is being stored on " + $storage)
+        Write-host("Target drive is " + $target + ": and is being stored on " + $storage + ": ")
 
         vssadmin resize shadowstorage /For=$target /On=$storage /MaxSize=20%
 
     }
-    else{
-        Write-host("Incorrect number of drive locations reported:" + $reg.Count + ". Must be divisible by 2")
-    }
+    
 }
 
 $drives = vssadmin list shadowstorage 
