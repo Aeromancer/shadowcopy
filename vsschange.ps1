@@ -13,7 +13,7 @@ Write-host($drives)
 [bool] $test = $true
 $errorCodes = [System.Collections.ArrayList]::New()
 $errorMessages = @( 'Error Code Zero: No error detected', 
-                    'Error Code Two: No Shadow Volume Drives Detected'
+                    'Error Code One: No Shadow Volume Drives Detected'
                     'Error Code Two: Wrong number of drives detected')
 
 if($reg.Count % 2 != 0){
