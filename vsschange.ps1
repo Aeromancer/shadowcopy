@@ -15,7 +15,7 @@ $reg = [regex]::Matches($drives, $pattern).Value
 $start = '('
 $end = ':)'
 
-$body = Write-Host($drives) + ' `r`n'
+$body = Write-Host($drives) +  "`r`n`r`n"
 
 
 [bool] $test = $true
@@ -49,7 +49,7 @@ if($test){
 
         $count++
 
-        $body = $body + 'Target drive is ' + $target + ': and is being stored on ' + $storage + ': `r`n' 
+        $body = $body + 'Target drive is ' + $target + ': and is being stored on ' + $storage + ": `r`n`r`n" 
 
         vssadmin resize shadowstorage /For=$target /On=$storage /MaxSize=20%
 
@@ -57,10 +57,10 @@ if($test){
 
     $drives = vssadmin list shadowstorage 
 
-    $body = $body + $drives + '`r`n'
+    $body = $body + $drives + "`r`n"
 } else {
     while($count -lt $errorCodes.length){
-    $body = $body + $errorMessages[$errorCodes[$count]] + '`r`n'
+    $body = $body + $errorMessages[$errorCodes[$count]] + "`r`n"
     Write-Host($count)
     Write-Host($errorCodes)
     
