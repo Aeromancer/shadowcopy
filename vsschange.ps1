@@ -22,12 +22,12 @@ $errorMessages = @( 'Error Code Zero: No error detected',
                     'Error Code One: No Shadow Volume Drives Detected'
                     'Error Code Two: Wrong number of drives detected')
 
-if($reg.Count % 2 != 0){
+if($reg.Count % 2 -ne 0){
     [void]$errorCodes.Add(2)
     $test = $false 
 }
 
-if($reg.Count == 0){
+if($reg.Count -eq 0){
     [void]$errorCodes.Add(1)
     $test = $false 
 }
