@@ -1,5 +1,5 @@
 ﻿$sendingEmail = 'CPVSS <CPVSS@cpflexpack.com>'
-$recepient = 'Alex Brown <abrown@cpflexpack.com>'
+[string[]]$recepient = 'Alex Brown <abrown@cpflexpack.com>'#, 'Layne Paules <lpaules@cpflexpack.com>'
 $computer = $env:computername
 $subject = 'VSS update on: ' + $computer
 $body = ''
@@ -15,7 +15,7 @@ $reg = [regex]::Matches($drives, $pattern).Value
 $start = '('
 $end = ':)'
 
-$body = Write-Host($drives) +  "`r`n`r`n"
+$body = $body + $drives[6] +  "`r`n" + $drives[7] +  "`r`n" + $drives[8] +  "`r`n"
 
 
 [bool] $test = $true
@@ -49,14 +49,14 @@ if($test){
 
         $count++
 
-        $body = $body + 'Target drive is ' + $target + ': and is being stored on ' + $storage + ": `r`n`r`n" 
-
+        $body = $body + 'Target drive is ' + $target + '\ and is being stored on ' + $storage + "\ `r`n`r`n" 
+        
         vssadmin resize shadowstorage /For=$target /On=$storage /MaxSize=20%
 
     }
 
     $drives = vssadmin list shadowstorage 
-
+    $body = $body + "The drives have been updated with the following:  `r`n`r`n"
     $body = $body + $drives + "`r`n"
 } else {
     while($count -lt $errorCodes.length){
