@@ -15,7 +15,7 @@ $reg = [regex]::Matches($drives, $pattern).Value
 $start = '('
 $end = ':)'
 
-
+Write-Host($reg)
 
 
 [bool] $test = $true
@@ -40,30 +40,37 @@ $count = 0
 
 if($test){
     while($count -ne $reg.Count){
-
+        Write-host("Here")
+        Write-host($reg[0]) 
         $body = $body + $drives[6 + ($count * 8)] +  "`r`n" + $drives[7  + ($count * 8)] +  "`r`n" + $drives[8 + ($count * 8)] +  "`r`n"
-        $count = $cold
-        $target = $reg[$count] + ':' 
+        Write-Host($body)
+        $cold = $count
+        $target = $reg[$count] + ':'
+        Write-Host("`r`n`r`n" + 'This is the target ' + $target  + 'This is reg 0 ' + $reg[0])   
+        $storage = $reg[$count + 1] + ':'
+        Write-Host('This is the storage ' + $storage)   
+        $body = $body + "`r`n`r`n"+ 'Target drive is ' + $target + '\ and is being stored on ' + $storage + "\ `r`n`r`n" 
+
 
         $count++
 
-        $storage = $reg[$count] + ':'
+ 
 
         $count++
 
-        $body = $body + 'Target drive is ' + $target + '\ and is being stored on ' + $storage + "\ `r`n`r`n" 
         
-        vssadmin resize shadowstorage /For=$target /On=$storage /MaxSize=20%
+        vssadmin resize shadowstorage /For=$target /On=$storage /MaxSize=25%
 
         $newstate = vssadmin list shadowstorage
-
+        Write-host($cold)
+        Write-host("Now here")
         $body = $body + $newstate[6 + ($cold * 8)] +  "`r`n" + $newstate[7  + ($cold * 8)] +  "`r`n" + $newstate[8 + ($cold * 8)] +  "`r`n"
 
     }
 
     $drives = vssadmin list shadowstorage 
-    $body = $body + "The drives have been updated with the following:  `r`n`r`n"
-    $body = $body + $drives + "`r`n"
+    #$body = $body + "The drives have been updated with the following:  `r`n`r`n"
+    #$body = $body + $drives + "`r`n"
 } else {
     while($count -lt $errorCodes.length){
     $body = $body + $errorMessages[$errorCodes[$count]] + "`r`n"
