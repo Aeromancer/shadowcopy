@@ -1,5 +1,5 @@
 ﻿$sendingEmail = 'CPVSS <CPVSS@cpflexpack.com>'
-[string[]]$recepient = 'Alex Brown <abrown@cpflexpack.com>'#, 'Layne Paules <lpaules@cpflexpack.com>'
+[string[]]$recepient = 'Alex Brown <abrown@cpflexpack.com>', 'Layne Paules <lpaules@cpflexpack.com>'
 $computer = $env:computername
 $subject = 'VSS update on: ' + $computer
 $body = ''
@@ -42,7 +42,7 @@ if($test){
     while($count -ne $reg.Count){
         Write-host("Here")
         Write-host($reg[0]) 
-        $body = $body + $drives[6 + ($count * 8)] +  "`r`n" + $drives[7  + ($count * 8)] +  "`r`n" + $drives[8 + ($count * 8)] +  "`r`n"
+        $body = $body +  "`r`n The old state was:`r`n" + $drives[6 + ($count * 7)  / 2] +  "`r`n" + $drives[7  + ($count * 7) / 2] +  "`r`n" + $drives[8 + ($count * 7) / 2] +  "`r`n"
         Write-Host($body)
         $cold = $count
         $target = $reg[$count] + ':'
@@ -59,12 +59,12 @@ if($test){
         $count++
 
         
-        vssadmin resize shadowstorage /For=$target /On=$storage /MaxSize=25%
+        vssadmin resize shadowstorage /For=$target /On=$storage /MaxSize=20%
 
         $newstate = vssadmin list shadowstorage
         Write-host($cold)
-        Write-host("Now here")
-        $body = $body + $newstate[6 + ($cold * 8)] +  "`r`n" + $newstate[7  + ($cold * 8)] +  "`r`n" + $newstate[8 + ($cold * 8)] +  "`r`n"
+        Write-host("Now here" + $newstate[6 + ($cold * 8) / 2])
+        $body = $body + $newstate[6 + ($cold * 7) / 2] +  "`r`n" + $newstate[7  + ($cold * 7) / 2] +  "`r`n" + $newstate[8 + ($cold * 7) / 2] +  "`r`n"
 
     }
 
