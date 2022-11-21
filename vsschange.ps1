@@ -90,4 +90,4 @@ if($test){
 
 
 
-Send-MailMessage -From $sendingEmail -To $recepient -Subject $subject -Body $body -SmtpServer 'cpflexpack-com.mail.protection.outlook.com'  
+Send-MailMessage -From $sendingEmail -To $recepient -Subject $subject -Body $body -SmtpServer 'email server goes here'  
