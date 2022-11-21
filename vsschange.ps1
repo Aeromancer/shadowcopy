@@ -1,5 +1,5 @@
-﻿$sendingEmail = 'CPVSS <CPVSS@cpflexpack.com>'
-[string[]]$recepient = 'Alex Brown <abrown@cpflexpack.com>'#, 'Layne Paules <lpaules@cpflexpack.com>'
+﻿$sendingEmail = 'Sender name<From email goes here>'
+[string[]]$recepient = 'Recepient Email 1 <Email goes here>'#, 'Recepient Email 2 <Email2 goes here>'
 $computer = $env:computername
 $subject = 'VSS update on: ' + $computer
 $body = ''
