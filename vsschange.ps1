@@ -1,5 +1,5 @@
 ﻿$sendingEmail = 'CPVSS <CPVSS@cpflexpack.com>'
-[string[]]$recepient = 'Alex Brown <abrown@cpflexpack.com>', 'Layne Paules <lpaules@cpflexpack.com>'
+[string[]]$recepient = 'Alex Brown <abrown@cpflexpack.com>'#, 'Layne Paules <lpaules@cpflexpack.com>'
 $computer = $env:computername
 $subject = 'VSS update on: ' + $computer
 $body = ''
@@ -64,7 +64,7 @@ if($test){
         $newstate = vssadmin list shadowstorage
         Write-host($cold)
         Write-host("Now here" + $newstate[6 + ($cold * 8) / 2])
-        $body = $body + $newstate[6 + ($cold * 7) / 2] +  "`r`n" + $newstate[7  + ($cold * 7) / 2] +  "`r`n" + $newstate[8 + ($cold * 7) / 2] +  "`r`n"
+        $body = $body + $newstate[6 + ($cold * 7) / 2] +  "`r`n" + $newstate[7  + ($cold * 7) / 2] +  "`r`n" + $newstate[8 + ($cold * 7) / 2] +  "`r`n`r`n" + "------------------------------------------------------------" +  "`r`n"
 
     }
 
