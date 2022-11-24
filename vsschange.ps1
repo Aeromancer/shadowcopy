@@ -58,8 +58,10 @@ if($test){
 
         $count++
 
-        
-        vssadmin resize shadowstorage /For=$target /On=$storage /MaxSize=20%
+        $disk = Get-WmiObject Win32_LogicalDisk -ComputerName $computer -Filter "DeviceID=$storage" | Foreach-Object {$_.Size}
+        $disk = [math]::Round($disk / 10)
+
+        vssadmin resize shadowstorage /For=$target /On=$storage /MaxSize=$disk
 
         $newstate = vssadmin list shadowstorage
         Write-host($cold)
