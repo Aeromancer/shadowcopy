@@ -1,5 +1,5 @@
 ﻿$sendingEmail = 'Sender name<From email goes here>'
-[string[]]$recepient = 'Recepient Email 1 <Email goes here>'#, 'Recepient Email 2 <Email2 goes here>'
+[string[]]$recepient = ''
 $computer = $env:computername
 $subject = 'VSS update on: ' + $computer
 $body = ''
@@ -73,6 +73,7 @@ if($test){
     $drives = vssadmin list shadowstorage 
     #$body = $body + "The drives have been updated with the following:  `r`n`r`n"
     #$body = $body + $drives + "`r`n"
+    $recepient = 'Recepient Email 1 <Email goes here>'#, 'Recepient Email 2 <Email2 goes here>'
 } else {
     while($count -lt $errorCodes.length){
     $body = $body + $errorMessages[$errorCodes[$count]] + "`r`n"
